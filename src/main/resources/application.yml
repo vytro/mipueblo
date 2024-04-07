@@ -1,0 +1,110 @@
+jwt:
+  secret: ${JWT_SECRET}
+
+server:
+  error:
+    path: /user/error
+    whitelabel:
+      enabled: false
+  port: ${CONTAINER_PORT:8080}
+
+spring:
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}
+#    url: jdbc:mysql://127.0.0.1:${MYSQL_PORT}/${MYSQL_DATABASE}
+#    url: jdbc:mysql://mysqldb:${MYSQL_PORT}/${MYSQL_DATABASE}
+#    url: jdbc:mysql://172.29.182.103:${MYSQL_PORT}/${MYSQL_DATABASE}
+#    url: jdbc:mysql://172.21.0.2:${MYSQL_PORT}/${MYSQL_DATABASE}
+    password: ${MYSQL_PASSWORD}
+    username: ${MYSQL_USERNAME}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      #ddl-auto: update # Hibernate will generate the necessary SQL to create new tables, sequences, etc,
+      # but also update existing schema to match the entities in your project.
+      #ddl-auto: validate # Hibernate will validate that the tables and columns exist and match the entity mappings.
+      ddl-auto: none # Hibernate will not perform any action on the database schema.
+    properties:
+      hibernate:
+        globally_quoted_indentifiers: true
+        #        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+      #ALL, NONE, ENABLE_SELECTIVE, DISABLE_SELECTIVE, and UNSPECIFIED.
+  #      jakarta.persistence.sharedCache.mode: ALL
+
+  sql:
+    init:
+      # turn this on when making changes to the database
+      #mode: always # Always initialize the database with the SQL scripts
+      mode: never # Never initialize the database with the SQL scripts
+      #mode: embedded # Initialize the database with the SQL scripts only if the database is embedded
+      continue-on-error: false
+
+  mail:
+    host: ${EMAIL_HOST}
+    port: ${EMAIL_PORT}
+    username: ${EMAIL_ID}
+    #    only for gmail
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          writetimout: 8000
+          connectiontimeout: 8000
+          timeout: 5000
+          auth: true
+          starttls:
+            enable: true
+            required: true
+#          ssl:
+#            trust: smtp.gmail.com
+#            enable: true
+#            required: true
+    verify:
+      host: ${VERIFY_EMAIL_HOST}
+
+ui:
+  app:
+    url: ${UI_APP_URL}
+
+application:
+  title: MiPueblo
+  version: 1.0
+
+##og works
+#spring:
+#  profiles:
+##    active: dev
+#    active: @spring.profiles.active@ # This is a placeholder for the active profile that's in the pom.xml file
+#
+#application:
+#  title: MiPueblo
+#  version: 1.0
+#
+#
+##spring:
+##  datasource:
+##    url: jdbc:mysql://127.0.0.1:3306/mipueblo
+##    password: 1234
+##    username: root
+##  jpa:
+##    database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
+##    generate-ddl: true
+##    show-sql: true
+##    hibernate:
+##      ddl-auto: update
+##    properties:
+##      hibernate:
+##        globally_quoted_indentifiers: true
+##        dialect: org.hibernate.dialect.MySQL8Dialect
+##        format_sql: true
+##  sql:
+##     init:
+##       mode: always
+##       continue-on-error: false
